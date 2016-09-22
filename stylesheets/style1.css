@@ -1,0 +1,136 @@
+.header{
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 0;
+  background: #1a237e;
+}
+.header h1{
+  text-align: center;
+  vertical-align:middle;
+  color: white;
+}
+#treelogo {
+
+    width: 500px;
+    height: 270px;
+}
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #222222;
+    z-index: 99999;
+    height: 100%;
+}
+#status {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    padding: 0;
+}
+.section{
+  padding: 1px;
+  margin: 0px;
+}
+#logo{
+  width : 90px ;
+  height: 85px;
+}
+.imgsize{
+  height: 1024px;
+  width: 1024px;
+}
+.nav{
+  height: auto;
+  width: auto;
+  background: indigo;
+}
+.nav ul{
+  margin: 0;
+  padding: 0;
+}
+.nav ul li{
+  list-style: none;
+  float: left;
+  display: block;
+  padding: 10px 65px;
+  color:black;
+}
+.nav ul li a{
+  text-decoration: none;
+}
+.nav ul li:hover{
+  color:white;
+}
+
+#slider {
+  width: 700px;
+  height: 343px;
+  overflow: hidden;
+}
+.slides{
+  display: block;
+  width: 9000px;
+  height: 343px;
+  margin: 0;
+  padding: 0;
+
+}
+.slide{
+  float: left;
+  list-style: none;
+  width: 700px;
+  height: 343px;
+
+}
+#slider .slide img{
+  width: 700px;
+  height: 400px;
+}
+.bord{
+  font-size: 44px;
+	color: #fff;
+	text-align: center;
+	font-family: fantasy;
+  background: #1a237e;
+  width:auto;
+  height:80px;
+}
+.logfeld{
+	height:300px;
+  width:auto;
+  color:'green';
+}
+.botom {
+  font-size: 20px;
+	color: #fff;
+	text-align: center;
+	font-family: sans-serif;
+  background: #283593;
+  width:auto;
+  height:105px ;
+  margin-bottom: auto;
+}
+#text1 , #text2{
+  margin-left: 40px;
+  width: 150px;
+  height:30px;
+  margin-top: 20px;
+  font-weight: 400;
+  font-size: 15pt;
+}
+
+.slogin{
+  margin-left: 180px;
+  margin-top: 3px;
+  font-weight: bold;
+}
+.bp{
+  margin-left: 80px;
+}
