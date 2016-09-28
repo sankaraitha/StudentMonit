@@ -23,13 +23,6 @@ $pass= $_POST['password'];
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--This is used for my styles-->
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
-  <style type="text/css">
-  #chatarea{
-      overflow-y: scroll;
-      height: 100px;
-      resize: none; /* Remove this if you want the user to resize the textarea */
-  }
-  </style>
 </head>
 <body background="images/background1.jpg">
 
@@ -198,8 +191,7 @@ else{
 ?>
   </div>
   <div id="tab3">
-  <h5 class='orange-text'>Chat Page</h5>
-  <textarea class='materialize-textarea-fixed' id='chatarea'>
+
     <?php
     $conn = mysql_connect("$servername", "$username", "$password");
     if (!$conn) {
@@ -210,8 +202,8 @@ else{
     $mydata = mysql_query($sql,$conn);
     if(mysql_num_rows($mydata) > 0 )
     {
-  /*  echo "<h5 class='orange-text'>Chat Page</h5>";
-    echo "<textarea class='materialize-textarea' id='chatarea'> ";*/
+    echo "<h5 class='orange-text'>Chat Page</h5>";
+    echo "<textarea class='materialize-textarea' id='chatarea'> ";
     while($record = mysql_fetch_array($mydata)){
         if($record['sender']==$name){
         echo $name.":" .$record['message']."\n";
@@ -220,10 +212,9 @@ else{
         echo $record['sender'].":". $record['message']."\n";
         }
     }
-  //  echo "</textarea>";
+    echo "</textarea>";
   }
     ?>
-    </textarea>
     <form>
       <div class="input-field col s6" >
           <input placeholder="pompapathi_sir" id="receiver" type="text" name="receiver" class="validate">
@@ -239,12 +230,10 @@ else{
           </textarea>
           <label for="textarea1">Message</label>
         </div>
-        <button class="btn waves-effect waves-light" type="button" name="action" onClick="getData(); getData1();">Send Message
-     <i class="material-icons right">send</i>
-   </button>
+        <input type="button" value="send message" class="btn waves-effect waves-orange" onClick="getData()">
     </form>
-    <div>
-      <b id="update">Please send message</b>
+    <div id="update">
+      <p><b>Please send message</b></p>
     </div>
   </div>
  </div>
@@ -269,8 +258,6 @@ else{
   <!-- The scripts of my html is end here -->
 </body>
 <script>
-document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
-
 $('#externals').click(function(){
   $('#tab2').show();
   $('#tab1').hide();
@@ -292,80 +279,25 @@ $(document).ready(function() {
   $('#tab2').hide();
     $('#tab3').hide();
 });
-function auto_load(){
-        $.ajax({
-          url: "chat.php",
-          cache: false,
-          success: function(data){
-             $("#tab3").html(data);
-          }
-        });
-}
-$("message").select(function(){
-    $("update").text("Typing..");
-    $("update").trigger('autoresize');
-  $(this).css("background-color", "blue");
-
-});
-
-
-$("send message").click(function(){
-  $val=$("message").text();
-  $("chatarea").append($val);
-  $("chatarea").trigger('autoresize');
-  $("message").val("");
-
-});
 var XMLHttpRequestobj=false;
 if(window.XMLHttpRequest)
 XMLHttpRequestobj=new XMLHttpRequest();
 else if(window.Activeobject)
 XMLHttpRequestobj=new Activeobject('Microsoft.XMLHttp');
+
 function getData()
 {
-
-  var sender=document.getElementById('sender').value;
-  var receiver=document.getElementById('receiver').value;
-  var message=document.getElementById('message').value;
   if(XMLHttpRequestobj){
+
   var obj= document.getElementById("update");
+
   XMLHttpRequestobj.onreadystatechange=function(){
   if(XMLHttpRequestobj.readyState==4 && XMLHttpRequestobj.status==200)
-  obj.innerHTML=XMLHttpRequestobj.responseText+": "+sender;
+  obj.innerHTML=XMLHttpRequestobj.responseText;
   }
-   XMLHttpRequestobj.open("GET","chat.php?send="+sender+"&receive="+receiver+"&mess="+message);
+   XMLHttpRequestobj.open("GET","chat.php");
   XMLHttpRequestobj.send();
   }
-  document.getElementById('message').value="";
-
 }
-
-var XMLHttpRequestobj=false;
-if(window.XMLHttpRequest)
-XMLHttpRequestobj=new XMLHttpRequest();
-else if(window.Activeobject)
-XMLHttpRequestobj=new Activeobject('Microsoft.XMLHttp');
-function getData1()
-{
-  var sender=document.getElementById('sender').value;
-  var receiver=document.getElementById('receiver').value;
-  var message=document.getElementById('message').value;
-  if(XMLHttpRequestobj){
-  var obj= document.getElementById("chatarea");
-  obj.value="";
-  XMLHttpRequestobj.onreadystatechange=function(){
-  if(XMLHttpRequestobj.readyState==4 && XMLHttpRequestobj.status==200)
-  obj.value=XMLHttpRequestobj.responseText;
-  }
-   XMLHttpRequestobj.open("GET","rchat.php?send="+sender+"&receive="+receiver+"&mess="+message);
-  XMLHttpRequestobj.send();
-  }
-  //document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
-}
-
-
-document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
-
-$('#chatarea').animate({scrollTop: $('#chatarea').prop("scrollHeight")}, 10);
 </script>
 </html>

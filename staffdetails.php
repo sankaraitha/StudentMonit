@@ -22,6 +22,13 @@ $pass= $_POST['password'];
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!--This is used for my styles-->
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+  <style type="text/css">
+  #chatarea{
+      overflow-y: scroll;
+      height: 100px;
+      resize: none; /* Remove this if you want the user to resize the textarea */
+  }
+  </style>
 </head>
 <body background="images/background1.jpg">
 
@@ -36,7 +43,7 @@ $pass= $_POST['password'];
         <i class="material-icons left white"><img src="images/home.png" /></i>Home</a>
      </div>
      <div class="card-panel  green darken-1 darken-2 z-depth-4">
-       <a  class="card-panel indigo darken-4 white-text z-depth-4 text-darken-4 left-align waves-effect waves-light btn" id="personal" href="#tab1">
+       <a  class="card-panel green darken-4 white-text z-depth-4 text-darken-4 left-align waves-effect waves-light btn" id="personal" href="#tab1">
          <i class="material-icons left white"><img src="images/home.png" /></i>
        Personal </a>
     </div>
@@ -141,21 +148,23 @@ $pass= $_POST['password'];
        }
     ?>
   </div>
-  <div id="tab3">
 
+
+  <div id="tab3">
+  <h5 class='orange-text'>Chat Page</h5>
+  <textarea class='materialize-textarea-relative' id='chatarea'>
     <?php
     $conn = mysql_connect("$servername", "$username", "$password");
     if (!$conn) {
         die("Connection failed: " . mysql_connect_error());
     }
     mysql_select_db("student",$conn);
-    //echo $name;
-    $sql="select * from `chat` where sender='$name' or receiver='$name' ";
+    $sql="select * from chat where sender='$name' or receiver='$name'";
     $mydata = mysql_query($sql,$conn);
     if(mysql_num_rows($mydata) > 0 )
     {
-    echo "<h5 class='orange-text'>Chat Page</h5>";
-    echo "<textarea class='materialize-textarea'> ";
+  /*  echo "<h5 class='orange-text'>Chat Page</h5>";
+    echo "<textarea class='materialize-textarea' id='chatarea'> ";*/
     while($record = mysql_fetch_array($mydata)){
         if($record['sender']==$name){
         echo $name.":" .$record['message']."\n";
@@ -164,12 +173,14 @@ $pass= $_POST['password'];
         echo $record['sender'].":". $record['message']."\n";
         }
     }
-    echo "</textarea>";
+  //  echo "</textarea>";
   }
     ?>
-    <form method="post" action="chat.php">
-      <div class="input-field col s6">
-          <input placeholder="pompapathi_sir" id="receiver" type="text" name="receiver" class="validate">
+    </textarea>
+  <div>
+    <form>
+      <div class="input-field col s6" >
+          <input placeholder="Y13IT801" id="receiver" type="text" name="receiver" class="validate">
           <label for="receiver">receiver</label>
         </div>
         <div class="input-field col s6">
@@ -182,9 +193,14 @@ $pass= $_POST['password'];
           </textarea>
           <label for="textarea1">Message</label>
         </div>
-        <input type="submit" name="send" value="sendmessage" />
+        <button class="btn waves-effect waves-light" type="button" name="action" onClick="getData(); getData1();">Send Message
+     <i class="material-icons right">send</i>
+   </button>
     </form>
-
+    <div>
+      <b id="update">Please send message</b>
+    </div>
+  </div>
   </div>
 <div id="tab5">
 Email Sending
@@ -264,6 +280,71 @@ function auto_load(){
           }
         });
 }
+$("message").select(function(){
+    $("update").text("Typing..");
+    $("update").trigger('autoresize');
+  $(this).css("background-color", "blue");
 
+});
+
+
+$("send message").click(function(){
+  $val=$("message").text();
+  $("chatarea").append($val);
+  $("chatarea").trigger('autoresize');
+  $("message").val("");
+
+});
+var XMLHttpRequestobj=false;
+if(window.XMLHttpRequest)
+XMLHttpRequestobj=new XMLHttpRequest();
+else if(window.Activeobject)
+XMLHttpRequestobj=new Activeobject('Microsoft.XMLHttp');
+function getData()
+{
+
+  var sender=document.getElementById('sender').value;
+  var receiver=document.getElementById('receiver').value;
+  var message=document.getElementById('message').value;
+  if(XMLHttpRequestobj){
+  var obj= document.getElementById("update");
+  XMLHttpRequestobj.onreadystatechange=function(){
+  if(XMLHttpRequestobj.readyState==4 && XMLHttpRequestobj.status==200)
+  obj.innerHTML=XMLHttpRequestobj.responseText+": "+sender;
+  }
+   XMLHttpRequestobj.open("GET","chat.php?send="+sender+"&receive="+receiver+"&mess="+message);
+  XMLHttpRequestobj.send();
+  }
+  document.getElementById('message').value="";
+
+}
+
+var XMLHttpRequestobj=false;
+if(window.XMLHttpRequest)
+XMLHttpRequestobj=new XMLHttpRequest();
+else if(window.Activeobject)
+XMLHttpRequestobj=new Activeobject('Microsoft.XMLHttp');
+function getData1()
+{
+  var sender=document.getElementById('sender').value;
+  var receiver=document.getElementById('receiver').value;
+  var message=document.getElementById('message').value;
+  if(XMLHttpRequestobj){
+  var obj= document.getElementById("chatarea");
+  obj.value="";
+  XMLHttpRequestobj.onreadystatechange=function(){
+  if(XMLHttpRequestobj.readyState==4 && XMLHttpRequestobj.status==200)
+  obj.value=XMLHttpRequestobj.responseText;
+  }
+   XMLHttpRequestobj.open("GET","rchat.php?send="+sender+"&receive="+receiver+"&mess="+message);
+  XMLHttpRequestobj.send();
+  }
+  //document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
+}
+
+
+document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
+
+$('#chatarea').animate({scrollTop: $('#chatarea').prop("scrollHeight")}, 10);
 </script>
 </html>
