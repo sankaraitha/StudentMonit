@@ -229,7 +229,12 @@ Email Sending
   <!-- The scripts of my html is end here -->
 </body>
 <script>
+document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
+setInterval(function(){
+  getData1();
+  document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
 
+},10000);
 $('#externals').click(function(){
   $('#tab2').show();
   $('#tab1').hide();
@@ -280,7 +285,7 @@ function auto_load(){
           }
         });
 }
-$("message").select(function(){
+/*$("message").select(function(){
     $("update").text("Typing..");
     $("update").trigger('autoresize');
   $(this).css("background-color", "blue");
@@ -294,12 +299,13 @@ $("send message").click(function(){
   $("chatarea").trigger('autoresize');
   $("message").val("");
 
-});
+});*/
 var XMLHttpRequestobj=false;
 if(window.XMLHttpRequest)
 XMLHttpRequestobj=new XMLHttpRequest();
 else if(window.Activeobject)
 XMLHttpRequestobj=new Activeobject('Microsoft.XMLHttp');
+$data="";
 function getData()
 {
 
@@ -315,6 +321,9 @@ function getData()
    XMLHttpRequestobj.open("GET","chat.php?send="+sender+"&receive="+receiver+"&mess="+message);
   XMLHttpRequestobj.send();
   }
+  //$("chatarea").append($("message").text());
+  alert(document.getElementById('message').value);
+  //$("chatarea").trigger("autoresize");
   document.getElementById('message').value="";
 
 }
@@ -339,12 +348,13 @@ function getData1()
    XMLHttpRequestobj.open("GET","rchat.php?send="+sender+"&receive="+receiver+"&mess="+message);
   XMLHttpRequestobj.send();
   }
-  //document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
+
+  document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight+1;
 }
 
 
-document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
 
-$('#chatarea').animate({scrollTop: $('#chatarea').prop("scrollHeight")}, 10);
+
+//$('#chatarea').animate({scrollTop: $('#chatarea').prop("scrollHeight")}, 10);
 </script>
 </html>

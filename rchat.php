@@ -9,6 +9,19 @@ $conn = mysql_connect("$servername", "$username", "$password");
 if (!$conn) {
     die("Connection failed: " . mysql_connect_error());
 }
+/*if(!$receive)
+{
+  echo "Message doesnot sent";
+  echo "Please enter receiver name";
+}
+else if(!$name)
+{
+  echo "Message doesnot sent";
+  echo "Please enter sender name";
+}
+else{
+
+*/
 mysql_select_db("student",$conn);
 $sql="select * from chat where sender='$name' or receiver='$name'";
 $mydata = mysql_query($sql,$conn);
@@ -26,4 +39,5 @@ while($record = mysql_fetch_array($mydata)){
 }
 //  echo "</textarea>";
 }
+//}
 ?>

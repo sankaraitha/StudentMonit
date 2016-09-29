@@ -243,7 +243,7 @@ else{
      <i class="material-icons right">send</i>
    </button>
     </form>
-    <div>
+    <div id="update1">
       <b id="update">Please send message</b>
     </div>
   </div>
@@ -269,8 +269,14 @@ else{
   <!-- The scripts of my html is end here -->
 </body>
 <script>
-document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
+//document.getElementById("chatarea").scrollBottom = document.getElementById("chatarea").scrollHeight;
 
+//$('#chatarea').animate({scrollTop: $('#chatarea').prop("scrollHeight")}, 10);
+setInterval(function(){
+  getData1();
+  document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
+
+},10000);
 $('#externals').click(function(){
   $('#tab2').show();
   $('#tab1').hide();
@@ -292,6 +298,7 @@ $(document).ready(function() {
   $('#tab2').hide();
     $('#tab3').hide();
 });
+
 function auto_load(){
         $.ajax({
           url: "chat.php",
@@ -301,14 +308,7 @@ function auto_load(){
           }
         });
 }
-$("message").select(function(){
-    $("update").text("Typing..");
-    $("update").trigger('autoresize');
-  $(this).css("background-color", "blue");
-
-});
-
-
+/*
 $("send message").click(function(){
   $val=$("message").text();
   $("chatarea").append($val);
@@ -316,6 +316,7 @@ $("send message").click(function(){
   $("message").val("");
 
 });
+*/
 var XMLHttpRequestobj=false;
 if(window.XMLHttpRequest)
 XMLHttpRequestobj=new XMLHttpRequest();
@@ -331,11 +332,14 @@ function getData()
   var obj= document.getElementById("update");
   XMLHttpRequestobj.onreadystatechange=function(){
   if(XMLHttpRequestobj.readyState==4 && XMLHttpRequestobj.status==200)
-  obj.innerHTML=XMLHttpRequestobj.responseText+": "+sender;
+  obj.innerHTML=XMLHttpRequestobj.responseText+" : "+sender;
   }
    XMLHttpRequestobj.open("GET","chat.php?send="+sender+"&receive="+receiver+"&mess="+message);
   XMLHttpRequestobj.send();
   }
+  //$("chatarea").append($("message").text());
+  //alert(  document.getElementById('message').value);
+  //$("chatarea").trigger("autoresize");
   document.getElementById('message').value="";
 
 }
@@ -360,12 +364,13 @@ function getData1()
    XMLHttpRequestobj.open("GET","rchat.php?send="+sender+"&receive="+receiver+"&mess="+message);
   XMLHttpRequestobj.send();
   }
-  //document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
+
+
+  document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
 }
 
 
 document.getElementById("chatarea").scrollTop = document.getElementById("chatarea").scrollHeight;
 
-$('#chatarea').animate({scrollTop: $('#chatarea').prop("scrollHeight")}, 10);
 </script>
 </html>
