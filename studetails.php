@@ -337,9 +337,10 @@ function getData()
    XMLHttpRequestobj.open("GET","chat.php?send="+sender+"&receive="+receiver+"&mess="+message);
   XMLHttpRequestobj.send();
   }
-  //$("chatarea").append($("message").text());
+  $("chatarea").append($("message").text());
+  $("chatarea").trigger("autoresize");
   //alert(  document.getElementById('message').value);
-  //$("chatarea").trigger("autoresize");
+
   document.getElementById('message').value="";
 
 }

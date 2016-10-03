@@ -48,13 +48,14 @@ $pass= $_POST['password'];
        Personal </a>
     </div>
      <div class="card-panel  green darken-1 z-depth-4">
-     <a class="card-panel green darken-4 white-text z-depth-4 text-darken-4 waves-effect waves-light btn" href="http://localhost:8080/phpmyadmin/tbl_change.php?db=student&table=sd&token=2955372f0a1debc9bb7c6bc848a33c54">
+     <a class="card-panel green darken-4 white-text z-depth-4 text-darken-4 waves-effect waves-light btn" id="addstudent" href="#tab6">
       <i class="material-icons left white"><img src="images/home.png" /></i>
        ADDSTUDENT </a>
     </div>
     <div class="card-panel  green darken-1 z-depth-4">
     <div>
-    <a class="card-panel  green darken-4 white-text z-depth-4 text-darken-4 left-align waves-effect waves-light btn"  href="http://localhost:8080/phpmyadmin/tbl_change.php?db=student&table=marks&token=b26a456fbb1ae08383a6587a7548ef16">
+    <a class="card-panel  green darken-4 white-text z-depth-4 text-darken-4 left-align waves-effect waves-light btn"
+    href="http://localhost:8080/phpmyadmin/tbl_change.php?db=student&table=marks&token=b26a456fbb1ae08383a6587a7548ef16">
       <i class="material-icons left  white"><img src="images/home.png" /></i>
       ADD MARKS
     </a></div>
@@ -202,6 +203,53 @@ $pass= $_POST['password'];
     </div>
   </div>
   </div>
+
+
+
+<div id="tab6">
+  <div class="row">
+    <form class="col s12">
+
+      <div class="row">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="sname" type="text" class="validate">
+          <label for="icon_prefix">Student Name</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="material-icons prefix" >phone</i>
+          <input id="sph" type="tel" class="validate">
+          <label for="icon_telephone">Telephone</label>
+        </div>
+      </div>
+      <input id="sid" type="text" class="validate">
+      <label for="icon_prefix">Student ID</label>
+      <input id="sfname" type="text" class="validate">
+      <label for="icon_prefix">FATHER NAME</label>
+      <input id="scourse" type="text" class="validate">
+      <label for="icon_prefix">Course</label>
+      <input id="sbranch" type="text" class="validate">
+      <label for="icon_prefix">Branch</label>
+      <input id="syear" type="text" class="validate">
+      <label for="icon_prefix">year</label>
+      <div>
+        <input id="semail" type="email" class="validate">
+        <label for="email">Email</label>
+      </div>
+      <button class="btn waves-effect waves-light" type="button" name="action" onClick="addData();">Submit
+      <i class="material-icons right">send</i>
+    </button>
+
+    <div id="update1">
+      <b>Please Enter Student details</b>
+    </div>
+    </form>
+
+  </div>
+
+</div>
+
+
 <div id="tab5">
 Email Sending
 
@@ -241,6 +289,7 @@ $('#externals').click(function(){
   $('#tab3').hide();
   $('#tab4').hide();
   $('#tab5').hide();
+    $('#tab6').hide();
 });
 $('#attendence').click(function(){
   $('#tab2').hide();
@@ -248,12 +297,23 @@ $('#attendence').click(function(){
   $('#tab3').hide();
   $('#tab4').show();
   $('#tab5').hide();
+    $('#tab6').hide();
+});
+
+$('#addstudent').click(function(){
+  $('#tab6').show();
+  $('#tab2').hide();
+  $('#tab1').hide();
+  $('#tab3').hide();
+  $('#tab5').hide();
+
 });
 $('#personal').click(function(){
   $('#tab1').show();
   $('#tab2').hide();
   $('#tab3').hide();$('#tab4').hide();
   $('#tab5').hide();
+    $('#tab6').hide();
 });
 $('#chat').click(function(){
   $('#tab1').hide();
@@ -261,6 +321,7 @@ $('#chat').click(function(){
   $('#tab3').show();
   $('#tab4').hide();
   $('#tab5').hide();
+    $('#tab6').hide();
 });
 $('#email').click(function(){
   $('#tab1').hide();
@@ -268,6 +329,7 @@ $('#email').click(function(){
   $('#tab3').hide();
   $('#tab4').hide();
   $('#tab5').show();
+    $('#tab6').hide();
 });
 $(document).ready(function() {
     $('#tab1').show();
@@ -275,6 +337,7 @@ $(document).ready(function() {
     $('#tab3').hide();
     $('#tab4').hide();
     $('#tab5').hide();
+      $('#tab6').hide();
 });
 function auto_load(){
         $.ajax({
@@ -321,9 +384,8 @@ function getData()
    XMLHttpRequestobj.open("GET","chat.php?send="+sender+"&receive="+receiver+"&mess="+message);
   XMLHttpRequestobj.send();
   }
-  //$("chatarea").append($("message").text());
-  alert(document.getElementById('message').value);
-  //$("chatarea").trigger("autoresize");
+  $("chatarea").append($("message").text());
+  $("chatarea").trigger("autoresize");
   document.getElementById('message').value="";
 
 }
@@ -353,6 +415,33 @@ function getData1()
 }
 
 
+var XMLHttpRequestobj=false;
+if(window.XMLHttpRequest)
+XMLHttpRequestobj=new XMLHttpRequest();
+else if(window.Activeobject)
+XMLHttpRequestobj=new Activeobject('Microsoft.XMLHttp');
+function addData()
+{
+
+  var sid=document.getElementById('sid').value;
+  var sname=document.getElementById('sname').value;
+  var sph=document.getElementById('sph').value;
+  var sfname=document.getElementById('sfname').value;
+  var scourse=document.getElementById('scourse').value;
+  var sbranch=document.getElementById('sbranch').value;
+  var syear=document.getElementById('syear').value;
+  var semail=document.getElementById('semail').value;
+  if(XMLHttpRequestobj){
+  var obj= document.getElementById("update1");
+  XMLHttpRequestobj.onreadystatechange=function(){
+  if(XMLHttpRequestobj.readyState==4 && XMLHttpRequestobj.status==200)
+  obj.innerHTML=XMLHttpRequestobj.responseText+": "+sender;
+  }
+   XMLHttpRequestobj.open("GET","addstudent.php?sid="+sid+"&sname="+sname+"&sph="+sph+"&sfname="+sfname+"&scourse="+scourse+"&sbranch="+sbranch+"&syear="+syear+"&semail="+semail);
+  XMLHttpRequestobj.send();
+  }
+
+}
 
 
 //$('#chatarea').animate({scrollTop: $('#chatarea').prop("scrollHeight")}, 10);
