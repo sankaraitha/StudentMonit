@@ -16,8 +16,8 @@
      </div>
   </div>
     <div class="header card-panel indigo">
-     <h1><em class="pull-left"><img src="images/logo2.jpg" id="logo" class="circle responsive-img"  /></em>
-        <em class="pull-right"><img src="images/rvr.jpg" id="logo" class="circle responsive-img"/></em>
+     <h1><em class="pull-left"><a href="home.html"><img src="images/logo2.jpg" id="logo" class="circle responsive-img"  /></a></em>
+        <em class="pull-right"><a href="home.html"><img src="images/rvr.jpg" id="logo" class="circle responsive-img"/></a></em>
         RVRJC COLLEGE OF ENGINEERING
      </h1>
   </div>
@@ -49,7 +49,7 @@
   </br></br><b>USERNAME</b></b><input type="text" placeholder="y13it801" id="text1" name="user" class="validate " length="8" required/>
   </br></br><b>PASSWORD</b></b><input type="password" placeholder="1234567890" id="text2" name="password"  class="validate" length="10" required="password should"/>
   </br></br><em class="bp"></em><input type="submit" value="LOGIN" class="btn waves-effect waves-orange"/>
-  <input type="button" value="RESET" class="btn waves-effect"/>
+  <input type="button" value="RESET" class="btn waves-effect" onclick="clr();"/>
  </form>
 </div>
 </div>
@@ -89,7 +89,13 @@ Key features.</p>
 
    $("#preloader").delay(500).fadeOut("slow").remove();
 
- })
+ });
+
+ function clr()
+ {
+   document.getElementById('text1').value="";
+   document.getElementById('text2').value="";
+ }
 
     </script>
 </html>
